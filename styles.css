@@ -160,16 +160,6 @@ h1 {
   text-decoration: none;
 }
 
-.button-primary {
-  color: #f4fffc;
-  border-color: transparent;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-}
-
-.button-primary:hover {
-  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
-}
-
 .button-icon {
   width: 2.3rem;
   height: 2.3rem;
@@ -211,27 +201,6 @@ p {
 .about-copy p + p {
   margin-top: 0.7rem;
 }
-
-.bio-placeholder {
-  margin: 0;
-  aspect-ratio: 4 / 5;
-  border-radius: 0.9rem;
-  border: 1px dashed color-mix(in srgb, var(--surface-border) 74%, transparent);
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  color: var(--muted);
-  min-height: 180px;
-}
-
-.bio-placeholder figcaption {
-  font-size: 0.86rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Rounded bio avatar */
 .bio {
   margin: 0;
   width: 150px;
@@ -295,30 +264,6 @@ h3 {
   font-weight: 600;
 }
 
-.link-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 0.8rem;
-}
-
-.link-card {
-  border: 1px solid color-mix(in srgb, var(--surface-border) 72%, transparent);
-  border-radius: 0.8rem;
-  padding: 0.9rem;
-}
-
-.link-card p {
-  color: var(--muted);
-  margin-top: 0.35rem;
-  min-height: 3.1rem;
-}
-
-.link-card a[aria-disabled="true"] {
-  opacity: 0.7;
-  pointer-events: none;
-}
-
 a {
   color: var(--accent);
   text-decoration-thickness: 0.08em;
@@ -345,14 +290,6 @@ a:hover {
 
 .reveal-delay-3 {
   animation-delay: 0.24s;
-}
-
-.reveal-delay-4 {
-  animation-delay: 0.32s;
-}
-
-.reveal-delay-5 {
-  animation-delay: 0.4s;
 }
 
 @keyframes rise {
@@ -384,17 +321,12 @@ a:hover {
     padding: 1rem;
   }
 
-  .belief-grid,
-  .link-grid {
+  .belief-grid {
     grid-template-columns: 1fr;
   }
 
   .about-layout {
     grid-template-columns: 1fr;
-  }
-
-  .bio-placeholder {
-    max-width: 200px;
   }
 
   .button {
