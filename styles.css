@@ -36,6 +36,8 @@ body {
 
 body {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: "Manrope", "Segoe UI", sans-serif;
   color: var(--text);
   background:
@@ -91,8 +93,28 @@ body {
 }
 
 .page {
+  flex: 1;
   width: min(860px, calc(100% - 2.5rem));
   margin: 5rem auto 4rem;
+}
+
+.site-footer {
+  width: min(860px, calc(100% - 2.5rem));
+  margin: auto auto 1.5rem;
+  padding: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+  opacity: 0.72;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer time {
+  font-weight: 500;
+  color: inherit;
 }
 
 .visually-hidden {
@@ -327,6 +349,10 @@ a:hover {
   .page {
     width: min(860px, calc(100% - 1.4rem));
     margin-top: 3.2rem;
+  }
+
+  .site-footer {
+    width: min(860px, calc(100% - 1.4rem));
   }
 
   .card {

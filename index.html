@@ -189,7 +189,28 @@
           <li>Application architecture powered by data</li>
         </ul>
       </section>
-
     </main>
+
+    <footer class="site-footer">
+      <p>
+        Last updated <time id="last-updated" datetime="">April 3, 2026</time><br/>built with ❤️ together with an AI 🤖
+      </p>
+    </footer>
+
+    <script>
+      const lastUpdatedElement = document.getElementById("last-updated");
+      const lastModified = new Date(document.lastModified);
+
+      if (
+        lastUpdatedElement &&
+        Number.isFinite(lastModified.getTime())
+      ) {
+        lastUpdatedElement.dateTime = lastModified.toISOString();
+        lastUpdatedElement.textContent = new Intl.DateTimeFormat("en-US", {
+          dateStyle: "long",
+          timeStyle: "short"
+        }).format(lastModified);
+      }
+    </script>
   </body>
 </html>
