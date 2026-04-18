@@ -206,93 +206,28 @@ h1 {
   letter-spacing: -0.03em;
 }
 
-.sql-animation {
-  margin: 1.35rem auto 0;
-  max-width: 42rem;
-  padding-top: 0.2rem;
-}
-
-.sql-animation-inputs {
+.sql-points {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-  align-items: center;
+  gap: 0.85rem;
+  margin: 1.35rem auto 0;
+  text-align: left;
 }
 
-.sql-pill {
-  position: relative;
-  padding: 0.7rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-  background: rgba(255, 255, 255, 0.52);
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  transform: scale(0.98);
-  opacity: 0.7;
-  transition:
-    transform 0.35s ease,
-    opacity 0.35s ease,
-    border-color 0.35s ease,
-    color 0.35s ease,
-    box-shadow 0.35s ease;
+.sql-point {
+  border: 1px solid color-mix(in srgb, var(--surface-border) 72%, transparent);
+  border-radius: 0.95rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
 }
 
-.sql-pill.is-active {
+.sql-point h3 {
   color: var(--accent-strong);
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  box-shadow: 0 10px 24px rgba(18, 118, 102, 0.16);
-  opacity: 1;
-  transform: translateY(-2px) scale(1);
 }
 
-.sql-animation-core {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 7rem;
-  height: 7rem;
-  margin: 1rem auto 0.85rem;
-}
-
-.sql-core-ring,
-.sql-core-label {
-  grid-area: 1 / 1;
-}
-
-.sql-core-ring {
-  width: 100%;
-  height: 100%;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
-  background:
-    radial-gradient(circle at center, color-mix(in srgb, var(--accent) 22%, transparent) 0, transparent 62%),
-    rgba(255, 255, 255, 0.45);
-  animation: sqlPulse 2.8s ease-in-out infinite;
-}
-
-.sql-core-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 999px;
-  background: var(--accent);
-  color: white;
-  font-family: "Sora", "Avenir Next", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  box-shadow: 0 14px 30px rgba(14, 118, 102, 0.24);
-}
-
-.sql-animation-caption {
-  margin: 0;
-  min-height: 3.4em;
+.sql-point p {
+  margin-top: 0.45rem;
   color: var(--muted);
-  font-size: 0.98rem;
 }
 
 .hero-actions {
@@ -467,19 +402,6 @@ a:hover {
   }
 }
 
-@keyframes sqlPulse {
-  0%,
-  100% {
-    transform: scale(0.96);
-    opacity: 0.8;
-  }
-
-  50% {
-    transform: scale(1.04);
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
@@ -489,12 +411,6 @@ a:hover {
 
   .button {
     transition: none;
-  }
-
-  .sql-pill,
-  .sql-core-ring {
-    transition: none;
-    animation: none;
   }
 }
 
@@ -521,16 +437,8 @@ a:hover {
     font-size: clamp(1.25rem, 7vw, 1.8rem);
   }
 
-  .sql-animation-inputs {
+  .sql-points {
     grid-template-columns: 1fr;
-  }
-
-  .sql-animation-core {
-    margin-top: 0.85rem;
-  }
-
-  .sql-animation-caption {
-    min-height: 4.8em;
   }
 
   .belief-grid {

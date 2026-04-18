@@ -68,8 +68,11 @@
         ]
       }
     </script>
-    <script data-goatcounter="https://davidemauri.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+    <script
+      data-goatcounter="https://davidemauri.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
   </head>
   <body>
     <div class="bg-shape bg-shape-top" aria-hidden="true"></div>
@@ -113,23 +116,28 @@
           intersection of human ingenuity, AI efficiency, and algorithmic
           precision.
         </p>
-        <div
-          class="sql-animation"
-          aria-label="Animated illustration showing how human ingenuity, AI agent efficiency, and algorithmic precision come together in SQL to extract value from data."
-        >
-          <div class="sql-animation-inputs" aria-hidden="true">
-            <div class="sql-pill is-active" data-sql-pill="0">Human ingenuity</div>
-            <div class="sql-pill" data-sql-pill="1">AI agent efficiency</div>
-            <div class="sql-pill" data-sql-pill="2">Algorithmic precision</div>
-          </div>
-          <div class="sql-animation-core" aria-hidden="true">
-            <span class="sql-core-ring"></span>
-            <span class="sql-core-label">SQL</span>
-          </div>
-          <p class="sql-animation-caption" data-sql-caption>
-            Human ingenuity + AI agent efficiency + algorithmic precision =
-            SQL = the language for extracting value from data.
-          </p>
+        <div class="sql-points" aria-label="Why SQL matters">
+          <article class="sql-point">
+            <h3>Human ingenuity brings intent</h3>
+            <p>
+              People frame the questions, goals, and tradeoffs that make data
+              work meaningful in the first place.
+            </p>
+          </article>
+          <article class="sql-point">
+            <h3>AI efficiency brings acceleration</h3>
+            <p>
+              AI agents can move faster across large datasets and workflows,
+              helping turn intent into action at much greater speed.
+            </p>
+          </article>
+          <article class="sql-point">
+            <h3>Algorithmic precision brings trust</h3>
+            <p>
+              Precision keeps data work explicit, repeatable, and reliable,
+              which is exactly why SQL remains such a strong interface.
+            </p>
+          </article>
         </div>
       </section>
 
@@ -221,7 +229,8 @@
 
     <footer class="site-footer">
       <p>
-        Last updated <time id="last-updated" datetime="">April 3, 2026</time><br/>built with ❤️ together with an AI 🤖
+        Last updated <time id="last-updated" datetime="">April 3, 2026</time
+        ><br />built with ❤️ together with an AI 🤖
       </p>
     </footer>
 
@@ -229,53 +238,12 @@
       const lastUpdatedElement = document.getElementById("last-updated");
       const lastModified = new Date(document.lastModified);
 
-      if (
-        lastUpdatedElement &&
-        Number.isFinite(lastModified.getTime())
-      ) {
+      if (lastUpdatedElement && Number.isFinite(lastModified.getTime())) {
         lastUpdatedElement.dateTime = lastModified.toISOString();
         lastUpdatedElement.textContent = new Intl.DateTimeFormat("en-US", {
           dateStyle: "long",
-          timeStyle: "short"
+          timeStyle: "short",
         }).format(lastModified);
-      }
-
-      const sqlAnimation = document.querySelector(".sql-animation");
-
-      if (sqlAnimation) {
-        const pills = Array.from(sqlAnimation.querySelectorAll("[data-sql-pill]"));
-        const caption = sqlAnimation.querySelector("[data-sql-caption]");
-        const messages = [
-          "Human ingenuity shapes intent.",
-          "AI agent efficiency accelerates execution.",
-          "Algorithmic precision makes outcomes reliable.",
-          "Together they meet in SQL, the language for extracting value from data."
-        ];
-
-        let activeIndex = 0;
-
-        const renderSqlAnimation = () => {
-          pills.forEach((pill, index) => {
-            pill.classList.toggle("is-active", index === activeIndex);
-          });
-
-          if (caption) {
-            const summary =
-              "Human ingenuity + AI agent efficiency + algorithmic precision = SQL";
-
-            caption.textContent =
-              activeIndex < 3
-                ? `${messages[activeIndex]} ${summary}.`
-                : messages[3];
-          }
-        };
-
-        renderSqlAnimation();
-
-        window.setInterval(() => {
-          activeIndex = (activeIndex + 1) % messages.length;
-          renderSqlAnimation();
-        }, 2200);
       }
     </script>
   </body>
