@@ -164,6 +164,7 @@ h1 {
 .statement {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   margin: 0 0 1rem;
   padding: 1.3rem 1.4rem 1.4rem;
   border-radius: 1.15rem;
@@ -172,7 +173,9 @@ h1 {
     linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
     color-mix(in srgb, var(--surface) 82%, white 18%);
   box-shadow: var(--shadow);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   text-align: center;
 }
 
@@ -278,6 +281,7 @@ h1 {
   background: var(--surface);
   border: 1px solid var(--surface-border);
   border-radius: 1rem;
+  overflow: hidden;
   padding: 1.25rem 1.3rem;
   margin: 1rem 0;
   box-shadow: var(--shadow);
