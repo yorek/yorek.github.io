@@ -10,7 +10,7 @@
     />
     <meta name="author" content="Davide Mauri" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#f7f6f3" />
+    <meta name="theme-color" content="#08110d" />
     <link rel="canonical" href="https://www.davidemauri.it/" />
 
     <meta
@@ -38,13 +38,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      referrerpolicy="no-referrer"
+      href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
     <script type="application/ld+json">
@@ -75,166 +74,283 @@
     ></script>
   </head>
   <body>
-    <div class="bg-shape bg-shape-top" aria-hidden="true"></div>
-    <div class="bg-shape bg-shape-bottom" aria-hidden="true"></div>
+    <main class="shell" aria-label="Davide Mauri terminal homepage">
+      <header class="terminal-window reveal" id="top">
+        <div class="window-bar" aria-hidden="true">
+          <span class="window-dot window-dot-close"></span>
+          <span class="window-dot window-dot-minimize"></span>
+          <span class="window-dot window-dot-expand"></span>
+          <span class="window-title">davide@sql-ai:~</span>
+        </div>
+        <div class="window-body hero-grid">
+          <section class="hero-terminal" aria-labelledby="hero-title">
+            <p class="section-label" id="hero-title">boot.log</p>
+            <div class="terminal-frame">
+              <div id="intro-terminal" class="intro-terminal" aria-hidden="true"></div>
+            </div>
+            <div class="command-row" aria-label="Primary links">
+              <a
+                class="command-link"
+                href="https://github.com/yorek"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                open github
+              </a>
+              <a
+                class="command-link"
+                href="https://www.linkedin.com/in/davidemauri/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                open linkedin
+              </a>
+            </div>
+          </section>
 
-    <main class="page">
-      <header class="hero reveal" id="top">
-        <p class="eyebrow">Davide Mauri</p>
-        <h1>SQL is the interface between humans and AI when it comes to data.</h1>
-        <p class="lead">
-          I work at the intersection of SQL, data platforms, and AI, with a
-          focus on making data systems more usable, more explicit, and more
-          intelligent.
-        </p>
-        <div class="hero-actions">
-          <a
-            class="button button-icon"
-            href="https://github.com/yorek"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub profile"
-            title="GitHub"
-            ><i class="fa-brands fa-github" aria-hidden="true"></i
-          ></a>
-          <a
-            class="button button-icon"
-            href="https://www.linkedin.com/in/davidemauri/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn profile"
-            title="LinkedIn"
-            ><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i
-          ></a>
+          <aside class="status-panel" aria-label="Profile summary">
+            <p class="section-label">profile.sys</p>
+            <ul class="status-list">
+              <li><span>role</span><strong>data + ai platform strategist</strong></li>
+              <li><span>focus</span><strong>sql as interface for humans and ai</strong></li>
+              <li><span>experience</span><strong>25+ years</strong></li>
+              <li><span>mode</span><strong>platform, product, systems</strong></li>
+            </ul>
+            <p class="status-note">
+              SQL is the interface between humans and AI when it comes to data.
+            </p>
+          </aside>
         </div>
       </header>
 
-      <section class="statement reveal reveal-delay-1" aria-label="SQL belief">
-        <p class="statement-kicker">Why SQL in the AI age?</p>
-        <p class="statement-quote">
-          SQL is clear, succinct, explicit, and declarative. It sits at the
-          intersection of human ingenuity, AI efficiency, and algorithmic
-          precision.
-        </p>
-        <div class="sql-points" aria-label="Why SQL matters">
-          <article class="sql-point">
-            <h3>Human ingenuity brings intent</h3>
-            <p>
-              People frame the questions, goals, and tradeoffs that make data
-              work meaningful in the first place.
-            </p>
-          </article>
-          <article class="sql-point">
-            <h3>AI efficiency brings acceleration</h3>
-            <p>
-              AI agents can move faster across large datasets and workflows,
-              helping turn intent into action at much greater speed.
-            </p>
-          </article>
-          <article class="sql-point">
-            <h3>Algorithmic precision brings trust</h3>
-            <p>
-              Precision keeps data work explicit, repeatable, and reliable,
-              which is exactly why SQL remains such a strong interface.
-            </p>
-          </article>
+      <section class="terminal-window reveal reveal-delay-1" aria-labelledby="belief-title">
+        <div class="window-bar" aria-hidden="true">
+          <span class="window-dot window-dot-close"></span>
+          <span class="window-dot window-dot-minimize"></span>
+          <span class="window-dot window-dot-expand"></span>
+          <span class="window-title">beliefs.sql</span>
         </div>
-      </section>
-
-      <section class="card reveal reveal-delay-2" id="about">
-        <h2 class="visually-hidden">About Davide Mauri</h2>
-        <div class="about-layout">
-          <figure class="bio" aria-label="Bio photo">
-            <img
-              src="biopic.jpg"
-              alt="Portrait of Davide Mauri"
-              class="bio-avatar"
-              width="200"
-              height="200"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-          <div class="about-copy">
+        <div class="window-body">
+          <p class="section-label" id="belief-title">query: why_sql_in_the_ai_age()</p>
+          <div class="quote-block">
             <p>
-              For <a href="https://www.linkedin.com/in/davidemauri/" target="_blank" rel="noopener noreferrer">more than 25 years</a>, I have worked across software
-              development, distributed systems, data platforms, IoT, and
-              product. I started by writing software and grew into product
-              leadership, but I still think in terms of systems, interfaces,
-              and code that has to work in the real world.
-            </p>
-            <p>
-              Today I focus on the future of data platforms in the AI era. I
-              believe SQL is the most important bridge between human intent and
-              machine execution over data, because it gives people and AI
-              systems a shared way to express what they need with clarity and
+              SQL is clear, succinct, explicit, and declarative. It sits at the
+              intersection of human ingenuity, AI efficiency, and algorithmic
               precision.
             </p>
+          </div>
+          <div class="grid-columns three-up">
+            <article class="panel">
+              <p class="panel-kicker">01 / intent</p>
+              <h2>Human ingenuity brings intent</h2>
+              <p>
+                People frame the questions, goals, and tradeoffs that make data
+                work meaningful in the first place.
+              </p>
+            </article>
+            <article class="panel">
+              <p class="panel-kicker">02 / acceleration</p>
+              <h2>AI efficiency brings acceleration</h2>
+              <p>
+                AI agents can move faster across large datasets and workflows,
+                helping turn intent into action at much greater speed.
+              </p>
+            </article>
+            <article class="panel">
+              <p class="panel-kicker">03 / trust</p>
+              <h2>Algorithmic precision brings trust</h2>
+              <p>
+                Precision keeps data work explicit, repeatable, and reliable,
+                which is exactly why SQL remains such a strong interface.
+              </p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="card reveal reveal-delay-3" id="beliefs">
-        <h2 class="visually-hidden">Core Beliefs</h2>
-        <div class="belief-grid">
-          <article class="belief">
-            <h3>SQL is the shared language for human intent and AI execution</h3>
-            <p>
-              When people need to say what data they want, and AI needs to act
-              on that request, SQL provides a concise and unambiguous interface.
-            </p>
-          </article>
-          <article class="belief">
-            <h3>Declarative systems scale better than opaque orchestration</h3>
-            <p>
-              The more explicit the interface, the easier it is for humans to
-              reason about outcomes and for machines to optimize execution.
-            </p>
-          </article>
-          <article class="belief">
-            <h3>AI quality depends on data platform quality</h3>
-            <p>
-              Models matter, but data foundations matter more. Reliable,
-              accessible, well-governed data is what makes AI systems useful.
-            </p>
-          </article>
-          <article class="belief">
-            <h3>Great platforms connect ingenuity, efficiency, and precision</h3>
-            <p>
-              The best data platforms let human creativity, AI acceleration,
-              and algorithmic rigor reinforce each other instead of competing.
-            </p>
-          </article>
+      <section class="terminal-window reveal reveal-delay-2" id="about" aria-labelledby="about-title">
+        <div class="window-bar" aria-hidden="true">
+          <span class="window-dot window-dot-close"></span>
+          <span class="window-dot window-dot-minimize"></span>
+          <span class="window-dot window-dot-expand"></span>
+          <span class="window-title">about.txt</span>
+        </div>
+        <div class="window-body">
+          <div class="about-grid">
+            <figure class="portrait-panel">
+              <img
+                src="biopic.jpg"
+                alt="Portrait of Davide Mauri"
+                class="bio-avatar"
+                width="240"
+                height="240"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portrait-caption">asset: biopic.jpg</figcaption>
+            </figure>
+
+            <div class="stack">
+              <div class="panel">
+                <p class="section-label" id="about-title">cat about.txt</p>
+                <p>
+                  For
+                  <a
+                    href="https://www.linkedin.com/in/davidemauri/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    more than 25 years
+                  </a>
+                  , I have worked across software development, distributed
+                  systems, data platforms, IoT, and product. I started by
+                  writing software and grew into product leadership, but I still
+                  think in terms of systems, interfaces, and code that has to
+                  work in the real world.
+                </p>
+                <p>
+                  Today I focus on the future of data platforms in the AI era. I
+                  believe SQL is the most important bridge between human intent
+                  and machine execution over data, because it gives people and
+                  AI systems a shared way to express what they need with clarity
+                  and precision.
+                </p>
+              </div>
+
+              <div class="panel">
+                <p class="section-label">ls focus/</p>
+                <ul class="terminal-list">
+                  <li>modern-data-platforms/</li>
+                  <li>sql-human-ai-interface/</li>
+                  <li>ai-enabled-applications/</li>
+                  <li>declarative-systems/</li>
+                  <li>vector-search-retrieval/</li>
+                  <li>developer-data-experience/</li>
+                  <li>data-apis/</li>
+                  <li>architecture-powered-by-data/</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="card reveal reveal-delay-3" id="focus">
-        <h2>Work and focus areas</h2>
-        <p>
-          I build and advise where data systems, SQL, AI, and product
-          execution meet.
-        </p>
-        <ul class="tag-list">
-          <li>Modern data platforms</li>
-          <li>SQL as an interface for humans and AI</li>
-          <li>AI-enabled applications</li>
-          <li>Declarative systems and interfaces</li>
-          <li>Vector search and intelligent retrieval</li>
-          <li>Developer and data experience</li>
-          <li>APIs and interfaces over data</li>
-          <li>Application architecture powered by data</li>
-        </ul>
+      <section class="terminal-window reveal reveal-delay-3" id="beliefs" aria-labelledby="core-title">
+        <div class="window-bar" aria-hidden="true">
+          <span class="window-dot window-dot-close"></span>
+          <span class="window-dot window-dot-minimize"></span>
+          <span class="window-dot window-dot-expand"></span>
+          <span class="window-title">core-beliefs.json</span>
+        </div>
+        <div class="window-body">
+          <p class="section-label" id="core-title">cat core-beliefs.json</p>
+          <div class="grid-columns two-up">
+            <article class="panel">
+              <h2>SQL is the shared language for human intent and AI execution</h2>
+              <p>
+                When people need to say what data they want, and AI needs to act
+                on that request, SQL provides a concise and unambiguous
+                interface.
+              </p>
+            </article>
+            <article class="panel">
+              <h2>Declarative systems scale better than opaque orchestration</h2>
+              <p>
+                The more explicit the interface, the easier it is for humans to
+                reason about outcomes and for machines to optimize execution.
+              </p>
+            </article>
+            <article class="panel">
+              <h2>AI quality depends on data platform quality</h2>
+              <p>
+                Models matter, but data foundations matter more. Reliable,
+                accessible, well-governed data is what makes AI systems useful.
+              </p>
+            </article>
+            <article class="panel">
+              <h2>Great platforms connect ingenuity, efficiency, and precision</h2>
+              <p>
+                The best data platforms let human creativity, AI acceleration,
+                and algorithmic rigor reinforce each other instead of competing.
+              </p>
+            </article>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <p>
-        Last updated <time id="last-updated" datetime="">April 3, 2026</time
-        ><br />built with ❤️ together with an AI 🤖
+        system status: online • last updated
+        <time id="last-updated" datetime="">April 3, 2026</time>
       </p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
     <script>
+      const introTerminalElement = document.getElementById("intro-terminal");
+
+      if (introTerminalElement && window.Terminal) {
+        const term = new Terminal({
+          convertEol: true,
+          cursorBlink: true,
+          cursorStyle: "block",
+          disableStdin: true,
+          rows: 12,
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 14,
+          theme: {
+            background: "#08110d",
+            foreground: "#d8f3dc",
+            cursor: "#6fffb0",
+            black: "#08110d",
+            brightBlack: "#365243",
+            green: "#6fffb0",
+            brightGreen: "#9affc9",
+            cyan: "#5ce1e6",
+            brightCyan: "#a1f5f7",
+            yellow: "#f4d35e",
+            brightYellow: "#ffef8a",
+            red: "#ff7b72",
+            brightRed: "#ffb3ad",
+            magenta: "#c792ea",
+            brightMagenta: "#dfb8ff",
+            white: "#d8f3dc",
+            brightWhite: "#f7fff8"
+          }
+        });
+
+        term.open(introTerminalElement);
+
+        const lines = [
+          "$ whoami",
+          "Davide Mauri",
+          "",
+          "$ describe",
+          "I work at the intersection of SQL, data platforms, and AI.",
+          "My focus is making data systems more usable, explicit,",
+          "and intelligent for people and machines alike.",
+          "",
+          "$ echo $MISSION",
+          "Build better interfaces between human intent and data."
+        ];
+
+        let lineIndex = 0;
+
+        const writeNextLine = () => {
+          if (lineIndex >= lines.length) {
+            term.write("\r\n$ ");
+            return;
+          }
+
+          term.writeln(lines[lineIndex]);
+          lineIndex += 1;
+          window.setTimeout(writeNextLine, lineIndex === 1 ? 280 : 180);
+        };
+
+        writeNextLine();
+      }
+
       const lastUpdatedElement = document.getElementById("last-updated");
       const lastModified = new Date(document.lastModified);
 
@@ -242,7 +358,7 @@
         lastUpdatedElement.dateTime = lastModified.toISOString();
         lastUpdatedElement.textContent = new Intl.DateTimeFormat("en-US", {
           dateStyle: "long",
-          timeStyle: "short",
+          timeStyle: "short"
         }).format(lastModified);
       }
     </script>
