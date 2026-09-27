@@ -4,61 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paint Mixing Distortion Effect</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-        }
-
-        canvas {
-            border: 2px solid #333;
-            background-color: white;
-            display: block;
-            max-width: 95vw;
-            max-height: 95vh;
-        }
-
-        .controls {
-            position: fixed;
-            top: 12px;
-            right: 12px;
-            display: flex;
-            gap: 8px;
-            font-family: Arial, sans-serif;
-        }
-
-        .controls button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .controls button:hover {
-            background-color: #45a049;
-        }
-
-        .controls button:active {
-            background-color: #3d8b40;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <img id="warp-image" src="../images/image.png" alt="" hidden />
+
     <canvas id="canvas" width="600" height="600"></canvas>
 
     <div class="controls">
+        <label class="control-field">
+            <span>Grid size</span>
+            <input id="grid-size" type="number" min="10" max="200" step="5" value="150" />
+        </label>
+
+        <label class="control-field">
+            <span>Keep grid fixed</span>
+            <input id="keep-grid-fixed" type="checkbox" checked />
+        </label>
+
         <button id="restart">Restart</button>
         <button id="pause">Pause</button>
         <button id="reset">Reset to Original</button>
-        <button id="toggle-grid">Show Grid</button>
+        <button id="toggle-grid">Hide Grid</button>
     </div>
 
     <script src="distort.js"></script>

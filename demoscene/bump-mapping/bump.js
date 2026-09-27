@@ -7,7 +7,7 @@
   const ctx = canvas.getContext('2d');
   const img = new Image();
   let paused = false;
-  img.src = 'image.png';
+  img.src = '../images/image.png';
   img.crossOrigin = 'anonymous';
 
   const restartButton = document.getElementById('restart');

@@ -8,91 +8,86 @@ let originalImageData = null;
 let sourceGrid = []; // Grid for perfect rectangles
 let distortedGrid = []; // Grid for distorted quadrilaterals
 let sharedVertices = []; // Shared vertex positions for continuity
+let fixedVertices = null;
 let animationId = null;
 let time = 0;
 let showGrid = false; // Toggle for grid visualization
 
 // Distortion parameters
-const GRID_SIZE = 50; // Size of each grid cell (larger for visible effect)
+let gridSize = 150; // Size of each grid cell (larger for visible effect)
+let keepGridFixed = false; // Whether the grid remains static while still rendering the current image
 const DISTORTION_STRENGTH = 7; // How much edges can "tear"
 const FLOW_SPEED = 0.04; // Animation speed
 const RAMP_UP_DURATION = 1.0; // How long to reach full distortion
-
-let file = "images/warpmap.jpg";
 
 // Initialize the distortion effect
 function initializeEffect() {
     // Get the canvas element and its 2D context
     const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
-    
-    // Create a new image object
-    const image = new Image();
-    
+    const hiddenImage = document.getElementById('warp-image');
+
+    if (!hiddenImage) {
+        console.error('Hidden image element not found');
+        ctx.fillStyle = '#ff0000';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Missing hidden image', canvas.width / 2, canvas.height / 2);
+        return;
+    }
+
+    // Use the hidden HTML element as the image source
+    const image = hiddenImage;
+
     // Set up the onload event handler
+    if (image.complete && image.naturalWidth > 0) {
+        loadAndDisplayImage(image);
+        return;
+    }
+
     image.onload = function() {
         loadAndDisplayImage(image);
     };
-    
+
     // Set up error handler
     image.onerror = function() {
         console.error('Failed to load image');
-        
+
         // Display error message on canvas
         ctx.fillStyle = '#ff0000';
         ctx.font = '20px Arial';
         ctx.textAlign = 'center';
         ctx.fillText('Failed to load image.png', canvas.width / 2, canvas.height / 2);
     };
-    
-    // Start loading the image
-    image.src = file;
 }
 
 // Shared function to load and display an image
 function loadAndDisplayImage(image) {
     const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
-    
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Scale image to completely fill canvas (crop if necessary to avoid white areas)
-    const canvasAspect = canvas.width / canvas.height;
-    const imageAspect = image.width / image.height;
-    
-    let drawWidth, drawHeight, drawX, drawY;
-    
-    if (imageAspect > canvasAspect) {
-        // Image is wider - scale to fill height, crop width
-        drawHeight = canvas.height;
-        drawWidth = canvas.height * imageAspect;
-        drawX = (canvas.width - drawWidth) / 2;
-        drawY = 0;
-    } else {
-        // Image is taller - scale to fill width, crop height
-        drawWidth = canvas.width;
-        drawHeight = canvas.width / imageAspect;
-        drawX = 0;
-        drawY = (canvas.height - drawHeight) / 2;
-    }
-    
-    // Draw the image on the canvas - this will fill the entire canvas
-    ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
-    
+
+    // Draw the image at its native size
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
     // Store the original image data for distortion
     originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     currentImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    
+
     // Initialize grids
     initializeGrids(canvas.width, canvas.height);
-    
+
     // Start the paint mixing animation
     startPaintMixingEffect();
-    
+
     console.log('Image loaded and grid-based melting effect started');
     console.log(`Original image size: ${image.width} x ${image.height}`);
-    console.log(`Display size: ${drawWidth} x ${drawHeight}`);
+    console.log(`Canvas size: ${canvas.width} x ${canvas.height}`);
 }
 
 // Initialize both grids: source and distorted with shared vertices
@@ -101,21 +96,23 @@ function initializeGrids(width, height) {
     distortedGrid = [];
     sharedVertices = [];
     
-    const gridCols = Math.ceil(width / GRID_SIZE);
-    const gridRows = Math.ceil(height / GRID_SIZE);
+    const gridCols = Math.ceil(width / gridSize);
+    const gridRows = Math.ceil(height / gridSize);
     
     // Create shared vertex grid - each vertex is shared by up to 4 boxes
     for (let row = 0; row <= gridRows; row++) {
         sharedVertices[row] = [];
         for (let col = 0; col <= gridCols; col++) {
-            const x = Math.min(col * GRID_SIZE, width);
-            const y = Math.min(row * GRID_SIZE, height);
+            const x = Math.min(col * gridSize, width);
+            const y = Math.min(row * gridSize, height);
+            const randomOffsetX = (Math.random() - 0.5) * DISTORTION_STRENGTH * 2;
+            const randomOffsetY = (Math.random() - 0.5) * DISTORTION_STRENGTH * 2;
             
             sharedVertices[row][col] = {
                 originalX: x,
                 originalY: y,
-                currentX: x,
-                currentY: y,
+                currentX: x + randomOffsetX,
+                currentY: y + randomOffsetY,
                 phase: Math.random() * Math.PI * 2,
                 frequency: 0.5 + Math.random() * 0.5
             };
@@ -145,13 +142,22 @@ function initializeGrids(width, height) {
             };
         }
     }
+
+    if (keepGridFixed) {
+        fixedVertices = sharedVertices.map(row => row.map(vertex => ({
+            currentX: vertex.currentX,
+            currentY: vertex.currentY,
+            originalX: vertex.originalX,
+            originalY: vertex.originalY
+        })));
+    }
 }
 
 // Update the shared vertices with distortion
 function updateDistortedGrid(width, height) {    
  
-    const gridCols = Math.ceil(width / GRID_SIZE);
-    const gridRows = Math.ceil(height / GRID_SIZE);
+    const gridCols = Math.ceil(width / gridSize);
+    const gridRows = Math.ceil(height / gridSize);
     
     // Gradual ramp-up effect
     const rampUpFactor = Math.min(1.0, time / RAMP_UP_DURATION);
@@ -161,6 +167,14 @@ function updateDistortedGrid(width, height) {
     for (let row = 0; row <= gridRows; row++) {
         for (let col = 0; col <= gridCols; col++) {
             const vertex = sharedVertices[row][col];
+
+            if (keepGridFixed) {
+                if (fixedVertices && fixedVertices[row] && fixedVertices[row][col]) {
+                    vertex.currentX = fixedVertices[row][col].currentX;
+                    vertex.currentY = fixedVertices[row][col].currentY;
+                }
+                continue;
+            }
             
             // Calculate distortion for this vertex based on its position and time
             const timePhase = time * vertex.frequency + vertex.phase;
@@ -206,16 +220,18 @@ function startPaintMixingEffect() {
 
 // Render the image by mapping source grid to distorted grid
 function renderGridDistortion(ctx, width, height) {
+    const sourceImageData = currentImageData;
+
     // Start with the current image as base - never create white pixels
     const newImageData = new ImageData(
-        new Uint8ClampedArray(currentImageData.data),
+        new Uint8ClampedArray(sourceImageData.data),
         width,
         height
     );
     const newData = newImageData.data;
     
-    const gridCols = Math.ceil(width / GRID_SIZE);
-    const gridRows = Math.ceil(height / GRID_SIZE);
+    const gridCols = Math.ceil(width / gridSize);
+    const gridRows = Math.ceil(height / gridSize);
     
     // Map each grid cell using the shared vertices (which ensure continuity)
     for (let row = 0; row < gridRows; row++) {
@@ -236,7 +252,7 @@ function renderGridDistortion(ctx, width, height) {
                 bottomRight: { x: bottomRight.currentX, y: bottomRight.currentY }
             };
             
-            mapGridCellPixels(source, distorted, currentImageData.data, newData, width, height);
+            mapGridCellPixels(source, distorted, sourceImageData.data, newData, width, height);
         }
     }
     
@@ -254,8 +270,8 @@ function renderGridDistortion(ctx, width, height) {
 
 // Draw the distortion grid overlay
 function drawGridOverlay(ctx, width, height) {
-    const gridCols = Math.ceil(width / GRID_SIZE);
-    const gridRows = Math.ceil(height / GRID_SIZE);
+    const gridCols = Math.ceil(width / gridSize);
+    const gridRows = Math.ceil(height / gridSize);
     
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
     ctx.lineWidth = 1;
@@ -293,6 +309,16 @@ function toggleGrid() {
     }
 }
 
+function syncUiFromState() {
+    const gridSizeInput = document.getElementById('grid-size');
+    const keepGridFixedInput = document.getElementById('keep-grid-fixed');
+    const toggleGridButton = document.getElementById('toggle-grid');
+
+    if (gridSizeInput) gridSizeInput.value = String(gridSize);
+    if (keepGridFixedInput) keepGridFixedInput.checked = keepGridFixed;
+    if (toggleGridButton) toggleGridButton.textContent = showGrid ? 'Hide Grid' : 'Show Grid';
+}
+
 // Bilinear interpolation helper function
 function bilinearInterpolate(topLeft, topRight, bottomLeft, bottomRight, u, v) {
     const top = topLeft * (1 - u) + topRight * u;
@@ -309,7 +335,7 @@ function mapGridCellPixels(source, distorted, sourceData, targetData, width, hei
     if (sourceWidth <= 0 || sourceHeight <= 0) return;
     
     // Sample points within the source rectangle and map them to the distorted quad
-    const sampleDensity = 1; // Reduced for better performance
+    const sampleDensity = 1;
     
     for (let sy = 0; sy < sourceHeight; sy += sampleDensity) {
         for (let sx = 0; sx < sourceWidth; sx += sampleDensity) {
@@ -345,18 +371,11 @@ function mapGridCellPixels(source, distorted, sourceData, targetData, width, hei
                 const sourceIndex = (Math.floor(srcY) * width + Math.floor(srcX)) * 4;
                 const targetIndex = (targetY * width + targetX) * 4;
                 
-                // Always blend colors - never create white pixels
-                const blendFactor = 0.4; // Gentle blending
-                
-                targetData[targetIndex] = Math.round(
-                    targetData[targetIndex] * (1 - blendFactor) + sourceData[sourceIndex] * blendFactor
-                );
-                targetData[targetIndex + 1] = Math.round(
-                    targetData[targetIndex + 1] * (1 - blendFactor) + sourceData[sourceIndex + 1] * blendFactor
-                );
-                targetData[targetIndex + 2] = Math.round(
-                    targetData[targetIndex + 2] * (1 - blendFactor) + sourceData[sourceIndex + 2] * blendFactor
-                );
+                // Apply the full remapped value from the previous image so a static grid
+                // still produces progressive deformation when the image is re-warped each frame.
+                targetData[targetIndex] = sourceData[sourceIndex];
+                targetData[targetIndex + 1] = sourceData[sourceIndex + 1];
+                targetData[targetIndex + 2] = sourceData[sourceIndex + 2];
                 // Keep original alpha
                 targetData[targetIndex + 3] = sourceData[sourceIndex + 3];
             }
@@ -411,8 +430,36 @@ pauseButton?.addEventListener('click', () => {
     }
 });
 
+const gridSizeInput = document.getElementById('grid-size');
+gridSizeInput?.addEventListener('input', () => {
+    const nextSize = Number(gridSizeInput.value);
+    if (!Number.isFinite(nextSize) || nextSize <= 0) return;
+    gridSize = Math.min(Math.max(nextSize, 10), 200);
+    if (originalImageData) {
+        initializeGrids(originalImageData.width, originalImageData.height);
+    }
+});
+
+const keepGridFixedInput = document.getElementById('keep-grid-fixed');
+keepGridFixedInput?.addEventListener('change', () => {
+    keepGridFixed = keepGridFixedInput.checked;
+    if (keepGridFixed) {
+        fixedVertices = sharedVertices.map(row => row.map(vertex => ({
+            currentX: vertex.currentX,
+            currentY: vertex.currentY,
+            originalX: vertex.originalX,
+            originalY: vertex.originalY
+        })));
+    } else {
+        fixedVertices = null;
+    }
+});
+
 document.getElementById('reset')?.addEventListener('click', resetImage);
 document.getElementById('toggle-grid')?.addEventListener('click', toggleGrid);
 
-// Wait for the DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => initializeEffect());
+// Keep the controls in sync with the real state at startup.
+document.addEventListener('DOMContentLoaded', () => {
+    syncUiFromState();
+    initializeEffect();
+});
