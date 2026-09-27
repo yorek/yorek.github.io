@@ -1,3 +1,7 @@
+function getCanvas() {
+    return document.getElementById('canvas') || document.getElementById('imageCanvas');
+}
+
 // Global variables for distortion effect
 let currentImageData = null;
 let originalImageData = null;
@@ -19,7 +23,7 @@ let file = "images/warpmap.jpg";
 // Initialize the distortion effect
 function initializeEffect() {
     // Get the canvas element and its 2D context
-    const canvas = document.getElementById('imageCanvas');
+    const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
     
     // Create a new image object
@@ -47,7 +51,7 @@ function initializeEffect() {
 
 // Shared function to load and display an image
 function loadAndDisplayImage(image) {
-    const canvas = document.getElementById('imageCanvas');
+    const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
     
     // Clear the canvas
@@ -177,7 +181,7 @@ function updateDistortedGrid(width, height) {
 
 // Start the paint mixing animation
 function startPaintMixingEffect() {
-    const canvas = document.getElementById('imageCanvas');
+    const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
     
     if (!currentImageData) return;
@@ -283,7 +287,7 @@ function drawGridOverlay(ctx, width, height) {
 // Toggle grid visualization
 function toggleGrid() {
     showGrid = !showGrid;
-    const button = document.querySelector('button[onclick="toggleGrid()"]');
+    const button = document.getElementById('toggle-grid');
     if (button) {
         button.textContent = showGrid ? 'Hide Grid' : 'Show Grid';
     }
@@ -370,7 +374,7 @@ function stopPaintMixingEffect() {
 
 // Reset to original image
 function resetImage() {
-    const canvas = document.getElementById('imageCanvas');
+    const canvas = getCanvas();
     const ctx = canvas.getContext('2d');
     
     stopPaintMixingEffect();
@@ -387,6 +391,28 @@ function resetImage() {
         ctx.putImageData(originalImageData, 0, 0);
     }
 }
+
+const restartButton = document.getElementById('restart');
+restartButton?.addEventListener('click', () => {
+    stopPaintMixingEffect();
+    startPaintMixingEffect();
+});
+
+const pauseButton = document.getElementById('pause');
+pauseButton?.addEventListener('click', () => {
+    if (pauseButton.dataset.paused === 'true') {
+        pauseButton.dataset.paused = 'false';
+        pauseButton.textContent = 'Pause';
+        startPaintMixingEffect();
+    } else {
+        pauseButton.dataset.paused = 'true';
+        pauseButton.textContent = 'Resume';
+        stopPaintMixingEffect();
+    }
+});
+
+document.getElementById('reset')?.addEventListener('click', resetImage);
+document.getElementById('toggle-grid')?.addEventListener('click', toggleGrid);
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => initializeEffect());

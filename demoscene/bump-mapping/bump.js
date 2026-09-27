@@ -3,11 +3,31 @@
 // effect with a light that follows the mouse cursor.
 
 (function () {
-  const canvas = document.getElementById('bump-canvas');
+  const canvas = document.getElementById('canvas') || document.getElementById('bump-canvas');
   const ctx = canvas.getContext('2d');
   const img = new Image();
+  let paused = false;
   img.src = 'image.png';
   img.crossOrigin = 'anonymous';
+
+  const restartButton = document.getElementById('restart');
+  restartButton?.addEventListener('click', () => {
+    paused = false;
+    const pauseBtn = document.getElementById('pause');
+    if (pauseBtn) pauseBtn.textContent = 'Pause';
+    if (width && height) {
+      light.x = width / 2;
+      light.y = height / 2;
+      mousePos.x = light.x;
+      mousePos.y = light.y;
+    }
+  });
+
+  const pauseBtn = document.getElementById('pause');
+  pauseBtn?.addEventListener('click', () => {
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+  });
 
   // Parameters
   const bumpStrength = 50; // how strong the height -> normal effect is
@@ -117,48 +137,50 @@
   }
 
   function loop() {
-    updateLight();
+    if (!paused) {
+      updateLight();
 
-    const out = ctx.createImageData(width, height);
-    const outData = out.data;
+      const out = ctx.createImageData(width, height);
+      const outData = out.data;
 
-    for (let y = 0, i = 0; y < height; y++) {
-      for (let x = 0; x < width; x++, i++) {
-        const srcIdx = i * 4;
-        const nx = normals[i * 3 + 0];
-        const ny = normals[i * 3 + 1];
-        const nz = normals[i * 3 + 2];
+      for (let y = 0, i = 0; y < height; y++) {
+        for (let x = 0; x < width; x++, i++) {
+          const srcIdx = i * 4;
+          const nx = normals[i * 3 + 0];
+          const ny = normals[i * 3 + 1];
+          const nz = normals[i * 3 + 2];
 
-        // light vector
-        let lx = light.x - x;
-        let ly = light.y - y;
-        let lz = light.z;
-        const llen = Math.hypot(lx, ly, lz) || 1;
-        lx /= llen; ly /= llen; lz /= llen;
+          // light vector
+          let lx = light.x - x;
+          let ly = light.y - y;
+          let lz = light.z;
+          const llen = Math.hypot(lx, ly, lz) || 1;
+          lx /= llen; ly /= llen; lz /= llen;
 
-        // diffuse term
-        let dot = nx * lx + ny * ly + nz * lz;
-        dot = Math.max(0, dot);
+          // diffuse term
+          let dot = nx * lx + ny * ly + nz * lz;
+          dot = Math.max(0, dot);
 
-        // specular: reflect L around N, compare with view (0,0,1)
-        // reflect = 2*(N.L)*N - L
-        //const rx = 2 * dot * nx - lx;
-        //const ry = 2 * dot * ny - ly;
-        const rz = 2 * dot * nz - lz;
-        const rvz = Math.max(0, rz); // view vector is (0,0,1)
-        const spec = Math.pow(rvz, shininess) * specularMul;
+          // specular: reflect L around N, compare with view (0,0,1)
+          // reflect = 2*(N.L)*N - L
+          //const rx = 2 * dot * nx - lx;
+          //const ry = 2 * dot * ny - ly;
+          const rz = 2 * dot * nz - lz;
+          const rvz = Math.max(0, rz); // view vector is (0,0,1)
+          const spec = Math.pow(rvz, shininess) * specularMul;
 
-        const shade = clamp(ambient + diffuseMul * dot + spec, 0, 2);
+          const shade = clamp(ambient + diffuseMul * dot + spec, 0, 2);
 
-        // apply shading to original color
-        outData[srcIdx] = clamp(originalPixels[srcIdx] * shade, 0, 255);
-        outData[srcIdx + 1] = clamp(originalPixels[srcIdx + 1] * shade, 0, 255);
-        outData[srcIdx + 2] = clamp(originalPixels[srcIdx + 2] * shade, 0, 255);
-        outData[srcIdx + 3] = originalPixels[srcIdx + 3];
+          // apply shading to original color
+          outData[srcIdx] = clamp(originalPixels[srcIdx] * shade, 0, 255);
+          outData[srcIdx + 1] = clamp(originalPixels[srcIdx + 1] * shade, 0, 255);
+          outData[srcIdx + 2] = clamp(originalPixels[srcIdx + 2] * shade, 0, 255);
+          outData[srcIdx + 3] = originalPixels[srcIdx + 3];
+        }
       }
-    }
 
-    ctx.putImageData(out, 0, 0);
+      ctx.putImageData(out, 0, 0);
+    }
 
     requestAnimationFrame(loop);
   }

@@ -229,9 +229,11 @@
   });
 
   function resizeAndStart() {
-    // give canvas a comfortable CSS size
-    const cssW = Math.min(window.innerWidth * 0.92, 1100);
-    const cssH = Math.min(window.innerHeight * 0.84, 700);
+    // keep the canvas at 90% of the viewport width and preserve its aspect ratio
+    const baseWidth = canvas.width || 900;
+    const baseHeight = canvas.height || 600;
+    const cssW = Math.min(window.innerWidth * 0.9, 1100);
+    const cssH = (cssW / baseWidth) * baseHeight;
     canvas.style.width = Math.round(cssW) + 'px';
     canvas.style.height = Math.round(cssH) + 'px';
     fitDpi();
