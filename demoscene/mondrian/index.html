@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mondrian Demo</title>
+  <style>
+    html,body { height:100%; margin:0; background:#f0f0f0; display:flex; align-items:center; justify-content:center; }
+    canvas { background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,0.12); max-width:95vw; max-height:95vh; }
+    .controls { position:fixed; top:12px; right:12px; font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial; }
+    button { padding:8px 12px; margin-left:6px; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="900" height="600"></canvas>
+  <div class="controls">
+    <button id="restart">Restart</button>
+    <button id="pause">Pause</button>
+  </div>
+  <script src="demo.js"></script>
+</body>
+</html>
