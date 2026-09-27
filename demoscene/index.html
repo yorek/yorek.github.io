@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demoscene experiments</title>
+    <style>
+      :root {
+        --bg: #f7f6f3;
+        --text: #1b1b1b;
+        --muted: #666;
+        --border: rgba(27, 27, 27, 0.12);
+        --link: #2d2d2d;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+        display: grid;
+        place-items: center;
+      }
+
+      .panel {
+        width: min(680px, calc(100vw - 2rem));
+        padding: 2rem 1.5rem 2.5rem;
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        letter-spacing: -0.04em;
+      }
+
+      p {
+        margin: 0 0 1.5rem;
+        color: var(--muted);
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      li {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.25);
+      }
+
+      a {
+        display: block;
+        padding: 0.9rem 1rem;
+        color: var(--link);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      .back {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Demoscene experiments</h1>
+      <p>Generative browser experiments and visual sketches.</p>
+
+      <ul>
+        <li><a href="bump-mapping/">bump-mapping</a></li>
+        <li><a href="distort/">distort</a></li>
+        <li><a href="mondrian/">mondrian</a></li>
+      </ul>
+
+      <p class="back"><a href="../">back to main site</a></p>
+    </main>
+  </body>
+</html>
